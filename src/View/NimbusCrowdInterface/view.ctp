@@ -18,22 +18,23 @@ echo $this->Html->css('NimbusCrowdInterface');
 ?>
 
 <style type="text/css">
+	#header{
+		position: relative;
+	}
 	#mjpeg{
 		position: relative;
 	}
 	#mjpeg canvas{
 		position: absolute;
 	}
-    #header{
-    }
 </style>
 
 <html>
 <head>
 
 	<?php
-		echo $this->Html->script('bootstrap.min');
-		echo $this->Html->css('bootstrap.min');
+		//echo $this->Html->script('bootstrap.min');
+		//echo $this->Html->css('bootstrap.min');
 		echo $this->Rms->ros($environment['Rosbridge']['uri']);
 		//Init study information
 		echo $this->Rms->initStudy();
@@ -463,6 +464,11 @@ echo $this->Html->css('NimbusCrowdInterface');
 		name : '/click_and_refine/clear',
 		serviceType : 'std_srvs/Empty'
 	});
+	var switchCameraClient = new ROSLIB.Service({
+		ros : _ROS,
+		name : '/camera_plexer/switch_camera',
+		serviceType : 'std_srvs/Empty'
+	});
 
 
 	//Setup ROS subscribers
@@ -880,10 +886,15 @@ echo $this->Html->css('NimbusCrowdInterface');
 	});
 
 	function switchCamera() {
-		current_stream_id=(current_stream_id+1) % streams.length;
+        //TODO: fix if we need more than 2 streams
+		current_stream_id=(current_stream_id+1) % 2;
 		var request = new ROSLIB.ServiceRequest({
 			cloudTopic: cloudTopics[current_stream_id]
 		});
+
+		var view = new ROSLIB.ServiceRequest({});
+		switchCameraClient.callService(view, function(results) {});
+
 		viewer.changeCamera(current_stream_id);
 		changePointCloudGS.callService(request, function(result) {});
 		changePointCloudPCC.callService(request, function(result) {});
@@ -1012,23 +1023,28 @@ echo $this->Html->css('NimbusCrowdInterface');
 
 	var videos=[];
 
-
-	for(var i =0;i<streams.length;i++){
-		videos.push(document.createElement('video'));
-		videos[i].src='http://rail-engine.cc.gatech.edu:8080/stream?topic='+streams[i]+'&type=vp8&bitrate=50000&quality=10';
-		videos[i].crossOrigin = 'Anonymous';
-		videos[i].setAttribute('crossorigin', 'Anonymous');
-		videos[i].play();
-	}
+    videos.push(document.createElement('video'));
+    videos[0].src = 'http://rail-engine.cc.gatech.edu:8080/stream?topic=camera_plexer/rgb/image_rect_color&type=vp8&bitrate=50000&quality=realtime';
+    videos[0].crossOrigin = 'Anonymous';
+    videos[0].preload = 'none';
+    videos[0].autoplay = 'true';
+    videos[0].playbackRate = 1.0;
+    videos[0].setAttribute('crossorigin', 'Anonymous');
+    //videos[0].play();
+    videos[0].addEventListener('canplay', function() {
+    	this.play();
+    });
 
 	videos[0].addEventListener('play',function()	{
-			//TODO fix this width
-		draw(canvas.getContext("2d"),size,size*0.75);
+		draw();
     },false);
 
-	function draw(c,w,h) {
-		c.drawImage(videos[current_stream_id],x=0,y=0,width=w,height=h);
-		setTimeout(draw,200,c,w,h);
+	function draw() {
+		//TODO fix this width
+		var w = size;
+		var h = size*0.75;
+		canvas.getContext("2d").drawImage(videos[0],x=0,y=0,width=w,height=h);
+		setTimeout(draw, 200);
 	}
 
 	// Create the main viewer
