@@ -469,6 +469,11 @@ echo $this->Html->css('NimbusCrowdInterface');
 		name : '/camera_plexer/switch_camera',
 		serviceType : 'std_srvs/Empty'
 	});
+	var resetCameraViewClient = new ROSLIB.Service({
+		ros : _ROS,
+		name : '/camera_plexer/reset_camera_view',
+		serviceType : 'std_srvs/Empty'
+	});
 
 
 	//Setup ROS subscribers
@@ -1015,6 +1020,10 @@ echo $this->Html->css('NimbusCrowdInterface');
 		$streamTopics .= ']';
 		$streamNames .= ']';
 	?>
+
+	var reset = new ROSLIB.ServiceRequest({});
+	resetCameraViewClient.callService(reset, function(results) {});
+
 
 	var streams=<?php echo  $streamTopics ?>;
 	var canvas=document.getElementById('mjpegcanvas');
