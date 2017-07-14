@@ -191,9 +191,6 @@ echo $this->Html->css('NimbusCrowdInterface');
 													<td>
 														<button id='openGripper' class='button special' style="width:150px; margin-left:auto !important; margin-right:auto !important;">open</button>
 													</td>
-													<td style="text-align:center; vertical-align:middle;">
-														<button id='resetArm' class='button special' style="width:150px">reset arm</button>
-													</td>
 												</tr>
 												<tr>
 													<td>
@@ -311,6 +308,11 @@ echo $this->Html->css('NimbusCrowdInterface');
 												<area shape="rect" coords="0,0,150,100" href="javascript:executeResetArm()">
 											</map>
 											<img id="img-reset" src="/img/Nimbus/nimbus-reset-arm.png" height="100" width="150" style="vertical-align:middle" usemap="#reset-map">
+										</td>
+									</tr>
+									<tr>
+										<td style="text-align:center; vertical-align:middle;">
+											<button id='resetArm' class='button special' style="width:150px">reset arm</button>
 										</td>
 									</tr>
 								</table>
