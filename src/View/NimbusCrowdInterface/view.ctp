@@ -174,33 +174,6 @@ echo $this->Html->css('NimbusCrowdInterface');
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td>
-											<table style="width:100% !important">
-												<tr>
-													<td>
-														<map name="gripper-map">
-														<area shape="rect" coords="0,0,45,100" href="javascript:executeOpenGripper()">
-														<area shape="rect" coords="46,0,104,100" href="javascript:executeCloseGripper()">
-														<area shape="rect" coords="105,0,150,100" href="javascript:executeOpenGripper()">
-													</map>
-													<img id="img-gripper" src="/img/Nimbus/nimbus-gripper.png" height="100" width="150" style="vertical-align:middle" usemap="#gripper-map">
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<button id='openGripper' class='button special' style="width:150px; margin-left:auto !important; margin-right:auto !important;">open</button>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<button id='closeGripper' class='button special' style="width:150px; margin-left:auto !important; margin-right:auto !important;">close</button>
-													</td>
-													<td></td>
-												</tr>
-											</table>
-										</td>
-									</tr>
 								</table>
 							</div>
 
@@ -295,6 +268,35 @@ echo $this->Html->css('NimbusCrowdInterface');
 										<td style="line-height:110%;">
 											<b>The arm will not avoid collisions!</b>
 											<br /><br />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<table style="width:100% !important">
+												<tr>
+													<td>
+														<map name="gripper-map">
+															<area shape="rect" coords="0,0,45,100" href="javascript:executeOpenGripper()">
+															<area shape="rect" coords="105,0,150,100" href="javascript:executeOpenGripper()">
+														</map>
+														<img id="img-gripper" src="/img/Nimbus/nimbus-gripper-open.png" height="100" width="150" style="vertical-align:middle" usemap="#gripper-map">
+													</td>
+													<td>
+														<map name="gripper-map">
+															<area shape="rect" coords="46,0,104,100" href="javascript:executeCloseGripper()">
+														</map>
+														<img id="img-gripper" src="/img/Nimbus/nimbus-gripper-close.png" height="100" width="150" style="vertical-align:middle" usemap="#gripper-map">
+													</td>													
+												</tr>
+												<tr>
+													<td>
+														<button id='openGripper' class='button special' style="width:150px;">open</button>
+													</td>
+													<td>
+														<button id='closeGripper' class='button special' style="width:150px;">close</button>
+													</td>
+												</tr>
+											</table>
 										</td>
 									</tr>
 								</table>
@@ -586,7 +588,7 @@ echo $this->Html->css('NimbusCrowdInterface');
 
 	$('#commonMode').click(function (e) {
 		e.preventDefault();
-		document.getElementById("current-mode").innerHTML = "Common";
+		document.getElementById("current-mode").innerHTML = "Reset";
 		hideRefine();
 		hideActions();
 		$('#mode-common').css("display", "inline");
@@ -594,7 +596,7 @@ echo $this->Html->css('NimbusCrowdInterface');
 
 		var request = new ROSLIB.ServiceRequest({});
 		clearPosesClient.callService(request, function(result) {
-			displayFeedback('Common mode active.');
+			displayFeedback('Reset mode active.');
 		});
 	});
 
