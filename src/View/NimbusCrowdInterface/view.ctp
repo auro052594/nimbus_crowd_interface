@@ -108,7 +108,7 @@ echo $this->Html->css('NimbusCrowdInterface');
 										<button id='moveMode' class='button special' style="width:150px">Move</button>
 									</td>
 									<td style="text-align:center">
-										<button id='commonMode' class='button special' style="width:150px">Common</button>
+										<button id='commonMode' class='button special' style="width:150px">Reset</button>
 									</td>
 								</tr>
 							</table>
@@ -170,6 +170,36 @@ echo $this->Html->css('NimbusCrowdInterface');
 													<td style="vertical-align:middle;">
 														<button id='executeGrasp' class='button special' style="width:150px">execute</button>
 													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<table style="width:100% !important">
+												<tr>
+													<td>
+														<map name="gripper-map">
+														<area shape="rect" coords="0,0,45,100" href="javascript:executeOpenGripper()">
+														<area shape="rect" coords="46,0,104,100" href="javascript:executeCloseGripper()">
+														<area shape="rect" coords="105,0,150,100" href="javascript:executeOpenGripper()">
+													</map>
+													<img id="img-gripper" src="/img/Nimbus/nimbus-gripper.png" height="100" width="150" style="vertical-align:middle" usemap="#gripper-map">
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<button id='openGripper' class='button special' style="width:150px; margin-left:auto !important; margin-right:auto !important;">open</button>
+													</td>
+													<td style="text-align:center; vertical-align:middle;">
+														<button id='resetArm' class='button special' style="width:150px">reset arm</button>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<button id='closeGripper' class='button special' style="width:150px; margin-left:auto !important; margin-right:auto !important;">close</button>
+													</td>
+													<td></td>
 												</tr>
 											</table>
 										</td>
@@ -277,33 +307,11 @@ echo $this->Html->css('NimbusCrowdInterface');
 								<table style="width:100% !important;">
 									<tr>
 										<td>
-											<map name="gripper-map">
-												<area shape="rect" coords="0,0,45,100" href="javascript:executeOpenGripper()">
-												<area shape="rect" coords="46,0,104,100" href="javascript:executeCloseGripper()">
-												<area shape="rect" coords="105,0,150,100" href="javascript:executeOpenGripper()">
-											</map>
-											<img id="img-gripper" src="/img/Nimbus/nimbus-gripper.png" height="100" width="150" style="vertical-align:middle" usemap="#gripper-map">
-										</td>
-										<td>
 											<map name="reset-map">
 												<area shape="rect" coords="0,0,150,100" href="javascript:executeResetArm()">
 											</map>
 											<img id="img-reset" src="/img/Nimbus/nimbus-reset-arm.png" height="100" width="150" style="vertical-align:middle" usemap="#reset-map">
 										</td>
-									</tr>
-									<tr>
-										<td>
-											<button id='openGripper' class='button special' style="width:150px; margin-left:auto !important; margin-right:auto !important;">open</button>
-										</td>
-										<td style="text-align:center; vertical-align:middle;">
-											<button id='resetArm' class='button special' style="width:150px">reset arm</button>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<button id='closeGripper' class='button special' style="width:150px; margin-left:auto !important; margin-right:auto !important;">close</button>
-										</td>
-										<td></td>
 									</tr>
 								</table>
 							</div>
